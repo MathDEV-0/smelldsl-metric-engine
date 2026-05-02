@@ -1,0 +1,111 @@
+smelltype DesignSmell;
+smelltype ImplementationSmell;
+
+//
+// ==========================================
+// BLOATERS
+// ==========================================
+//
+
+smell LargeClass extends DesignSmell {
+
+    feature LOC_CLASS is Ratio with threshold 300, 500;
+    feature WMC is Interval with threshold 40, 80;
+    feature RFC is Interval with threshold 50, 100;
+    feature CBO is Interval with threshold 10, 20;
+
+    symptom "Class has too many responsibilities";
+    treatment "Extract Class";
+}
+
+smell LongMethod extends ImplementationSmell {
+
+    feature LOC is Ratio with threshold 30, 80;
+    feature CYCLO is Interval with threshold 10, 20;
+    feature MAXNESTING is Interval with threshold 3, 5;
+    feature PARAMS is Interval with threshold 4, 8;
+
+    symptom "Method is too complex";
+    treatment "Extract Method";
+}
+
+smell PrimitiveObsession extends DesignSmell {
+
+    feature PARAMS is Interval with threshold 5, 10;
+    feature LOC is Ratio with threshold 20, 50;
+
+    symptom "Too many primitive values";
+    treatment "Replace Data Value with Object";
+}
+
+smell DataClass extends DesignSmell {
+
+    feature WMC is Interval with threshold 5, 10;
+    feature LOC_CLASS is Ratio with threshold 100, 200;
+    feature TCC is Interval with threshold 0, 1;
+
+    symptom "Class only stores data";
+    treatment "Move Behavior to Data Class";
+}
+
+smell LazyClass extends DesignSmell {
+
+    feature WMC is Interval with threshold 1, 3;
+    feature LOC_CLASS is Ratio with threshold 10, 30;
+    feature RFC is Interval with threshold 1, 5;
+
+    symptom "Class does too little";
+    treatment "Inline Class";
+}
+
+//
+// ==========================================
+// RULES
+// ==========================================
+//
+
+rule R1 when
+(
+    LargeClass.LOC_CLASS > LargeClass.LOC_CLASS
+)
+AND
+(
+    LargeClass.WMC > LargeClass.WMC
+)
+then "LargeClassDetected";
+
+rule R2 when
+(
+    LongMethod.LOC > LongMethod.LOC
+)
+AND
+(
+    LongMethod.CYCLO > LongMethod.CYCLO
+)
+then "LongMethodDetected";
+
+rule R3 when
+(
+    PrimitiveObsession.PARAMS > PrimitiveObsession.PARAMS
+)
+then "PrimitiveObsessionDetected";
+
+rule R4 when
+(
+    DataClass.TCC > DataClass.TCC
+)
+AND
+(
+    DataClass.WMC > DataClass.WMC
+)
+then "DataClassDetected";
+
+rule R5 when
+(
+    LazyClass.WMC > LazyClass.WMC
+)
+AND
+(
+    LazyClass.RFC > LazyClass.RFC
+)
+then "LazyClassDetected";

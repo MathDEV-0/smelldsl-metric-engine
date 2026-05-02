@@ -1,0 +1,19 @@
+# =========================================
+# Java project path
+# =========================================
+
+PROJECT_PATH=C:/path/to/your/java/project
+
+# =========================================
+# CK jar path
+# =========================================
+
+CK_JAR_PATH=C:/path/to/ck-jar-with-dependencies.jar
+
+# =========================================
+# Output folders
+# =========================================
+
+OUTPUT_DIR=metrics_output
+
+DSL_DIR=smelldsl

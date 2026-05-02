@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Output folders
+metrics_output/*
+!metrics_output/.gitkeep
+
+#SmellDSL
+smelldsl/*
+!smelldsl/.gitkeep
+
+#Config file
+config.txt
